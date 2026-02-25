@@ -167,7 +167,10 @@ impl BuildSystem {
         config: &GenerateConfig,
     ) -> Result<(), Box<dyn std::error::Error>> {
         // Set up cargo rerun directives
-        println!("cargo:rerun-if-changed={}", config.project_path);
+
+        for path in config.project_path.iter() {
+            println!("cargo:rerun-if-changed={}", path);
+        }
 
         // Watch for changes in configuration files
         if Path::new("tauri.conf.json").exists() {

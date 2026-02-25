@@ -56,7 +56,7 @@ pub fn generate_from_config(
     if config.is_verbose() {
         logger.info(&format!(
             "🔍 Analyzing Tauri commands in: {}",
-            config.project_path
+            config.project_path[0]
         ));
     }
 

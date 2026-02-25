@@ -103,7 +103,7 @@ impl From<&TypegenCommands> for GenerateConfig {
             } => {
                 let mut config = GenerateConfig::default();
                 if let Some(p) = project_path {
-                    config.project_path = p.to_string_lossy().to_string();
+                    config.project_path = Vec::from([p.to_string_lossy().to_string()]);
                 }
                 if let Some(o) = output_path {
                     config.output_path = o.to_string_lossy().to_string();
@@ -130,7 +130,7 @@ impl From<&TypegenCommands> for GenerateConfig {
             } => {
                 let mut config = GenerateConfig::default();
                 if let Some(p) = project_path {
-                    config.project_path = p.to_string_lossy().to_string();
+                    config.project_path = Vec::from([p.to_string_lossy().to_string()]);
                 }
                 if let Some(g) = generated_path {
                     config.output_path = g.to_string_lossy().to_string();
@@ -169,7 +169,7 @@ mod tests {
         };
 
         let config = GenerateConfig::from(&cmd);
-        assert_eq!(config.project_path, "./src-tauri");
+        assert_eq!(config.project_path, Vec::from(["./src-tauri".to_string()]));
         assert_eq!(config.output_path, "./src/generated");
         assert_eq!(config.validation_library, "none");
         assert_eq!(config.verbose, Some(false));
@@ -189,7 +189,7 @@ mod tests {
         };
 
         let config = GenerateConfig::from(&cmd);
-        assert_eq!(config.project_path, "./my-tauri");
+        assert_eq!(config.project_path, Vec::from(["./my-tauri".to_string()]));
         assert_eq!(config.output_path, "./types");
         assert_eq!(config.validation_library, "none");
         assert_eq!(config.verbose, Some(true));
@@ -210,7 +210,7 @@ mod tests {
         };
 
         let config = GenerateConfig::from(&cmd);
-        assert_eq!(config.project_path, "./src-tauri"); // default
+        assert_eq!(config.project_path, Vec::from(["./src-tauri".to_string()]));
         assert_eq!(config.output_path, "./src/generated"); // default
         assert_eq!(config.validation_library, "none"); // overridden
         assert_eq!(config.verbose, Some(true)); // overridden
@@ -230,7 +230,7 @@ mod tests {
         };
 
         let config = GenerateConfig::from(&cmd);
-        assert_eq!(config.project_path, "./src-tauri");
+        assert_eq!(config.project_path, Vec::from(["./src-tauri".to_string()]));
         assert_eq!(config.output_path, "./src/generated");
         assert_eq!(config.validation_library, "none");
         assert_eq!(config.verbose, Some(false));
@@ -250,7 +250,7 @@ mod tests {
         };
 
         let config = GenerateConfig::from(&cmd);
-        assert_eq!(config.project_path, "./my-tauri");
+        assert_eq!(config.project_path, Vec::from(["./my-tauri".to_string()]));
         assert_eq!(config.output_path, "./my-types");
         assert_eq!(config.validation_library, "none");
         assert_eq!(config.verbose, Some(true));

@@ -52,9 +52,9 @@ impl Logger {
                 LogLevel::Verbose => "💬",
             };
             if icon.is_empty() {
-                println!("{}", message);
+                println!("cargo:warning={}", message);
             } else {
-                println!("{} {}", icon, message);
+                println!("cargo:warning={} {}", icon, message);
             }
         }
     }

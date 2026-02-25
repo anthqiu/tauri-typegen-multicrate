@@ -19,7 +19,7 @@ pub enum ConfigError {
 pub struct GenerateConfig {
     /// Path to the Tauri project source directory
     #[serde(default = "default_project_path")]
-    pub project_path: String,
+    pub project_path: Vec<String>,
 
     /// Output path for generated TypeScript files
     #[serde(default = "default_output_path")]
@@ -71,8 +71,8 @@ pub struct GenerateConfig {
     pub force: Option<bool>,
 }
 
-fn default_project_path() -> String {
-    "./src-tauri".to_string()
+fn default_project_path() -> Vec<String> {
+    Vec::from(["./src-tauri".to_string()])
 }
 
 fn default_output_path() -> String {
@@ -137,7 +137,7 @@ impl GenerateConfig {
                 let mut config = Self::default();
 
                 if let Some(project_path) = typegen.get("projectPath").and_then(|v| v.as_str()) {
-                    config.project_path = project_path.to_string();
+                    config.project_path = Vec::from([project_path.to_string()]);
                 }
                 if let Some(output_path) = typegen.get("outputPath").and_then(|v| v.as_str()) {
                     config.output_path = output_path.to_string();
@@ -262,13 +262,15 @@ impl GenerateConfig {
             }
         }
 
-        // Validate paths exist
-        let project_path = Path::new(&self.project_path);
-        if !project_path.exists() {
-            return Err(ConfigError::InvalidConfig(format!(
-                "Project path does not exist: {}",
-                self.project_path
-            )));
+        for path in self.project_path.iter() {
+            // Validate paths exist
+            let project_path = Path::new(&path);
+            if !project_path.exists() {
+                return Err(ConfigError::InvalidConfig(format!(
+                    "Project path does not exist: {}",
+                    path
+                )));
+            }
         }
 
         Ok(())
@@ -384,7 +386,7 @@ mod tests {
         std::fs::create_dir_all(&project_path).unwrap();
 
         let config = GenerateConfig {
-            project_path: project_path.to_string_lossy().to_string(),
+            project_path: [project_path.to_string_lossy().to_string()],
             output_path: "./test".to_string(),
             verbose: Some(true),
             ..Default::default()
@@ -431,7 +433,7 @@ mod tests {
         .unwrap();
 
         let config = GenerateConfig {
-            project_path: project_path.to_string_lossy().to_string(),
+            project_path: [project_path.to_string_lossy().to_string()],
             output_path: "./test".to_string(),
             validation_library: "zod".to_string(),
             verbose: Some(true),
@@ -488,7 +490,7 @@ mod tests {
         .unwrap();
 
         let config = GenerateConfig {
-            project_path: project_path.to_string_lossy().to_string(),
+            project_path: [project_path.to_string_lossy().to_string()],
             output_path: "./test".to_string(),
             validation_library: "none".to_string(),
             ..Default::default()

@@ -68,7 +68,7 @@ impl CommandAnalyzer {
     /// Analyze a complete project for Tauri commands and types
     pub fn analyze_project(
         &mut self,
-        project_path: &str,
+        project_path: &Vec<String>,
     ) -> Result<Vec<CommandInfo>, Box<dyn std::error::Error>> {
         self.analyze_project_with_verbose(project_path, false)
     }
@@ -76,12 +76,15 @@ impl CommandAnalyzer {
     /// Analyze a complete project for Tauri commands and types with verbose output
     pub fn analyze_project_with_verbose(
         &mut self,
-        project_path: &str,
+        project_path: &Vec<String>,
         verbose: bool,
     ) -> Result<Vec<CommandInfo>, Box<dyn std::error::Error>> {
+
         // Single pass: Parse all Rust files and cache ASTs
-        self.ast_cache
-            .parse_and_cache_all_files(project_path, verbose)?;
+        for project in project_path.iter() {
+            self.ast_cache
+                .parse_and_cache_all_files(project, verbose)?;
+        }
 
         // Extract commands from cached ASTs
         let file_paths: Vec<PathBuf> = self.ast_cache.keys().cloned().collect();
