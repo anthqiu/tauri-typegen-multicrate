@@ -428,7 +428,7 @@ mod tests {
 
         fn create_test_config() -> GenerateConfig {
             GenerateConfig {
-                project_path: ".".to_string(),
+                project_path: Vec::from([".".to_string()]),
                 output_path: "./output".to_string(),
                 validation_library: "zod".to_string(),
                 visualize_deps: Some(false),

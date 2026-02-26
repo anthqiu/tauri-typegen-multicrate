@@ -318,7 +318,7 @@ mod tests {
         let config = build_system.load_configuration(&project_info).unwrap();
 
         assert_eq!(config.validation_library, "none");
-        assert_eq!(config.project_path, "./src-tauri");
+        assert_eq!(config.project_path[0], "./src-tauri");
     }
 
     #[test]
@@ -411,7 +411,7 @@ mod tests {
 
         // Should fall back to defaults
         assert_eq!(config.validation_library, "none");
-        assert_eq!(config.project_path, "./src-tauri");
+        assert_eq!(config.project_path, Vec::from(["./src-tauri"]));
     }
 
     #[test]

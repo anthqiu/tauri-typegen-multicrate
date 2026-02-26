@@ -38,7 +38,8 @@ impl TestProject {
     /// Analyze the project and return discovered commands
     pub fn analyze(&self) -> (CommandAnalyzer, Vec<CommandInfo>) {
         let mut analyzer = CommandAnalyzer::new();
-        let commands = analyzer.analyze_project(self.path()).unwrap();
+        let path = Vec::from([String::from(self.path())]);
+        let commands = analyzer.analyze_project(&path).unwrap();
         (analyzer, commands)
     }
 }

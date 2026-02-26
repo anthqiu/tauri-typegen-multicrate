@@ -262,7 +262,7 @@ mod tests {
 
     fn create_test_config() -> GenerateConfig {
         GenerateConfig {
-            project_path: "./src-tauri".to_string(),
+            project_path: Vec::from(["./src-tauri".to_string()]),
             output_path: "./src/generated".to_string(),
             validation_library: "none".to_string(),
             verbose: Some(false),

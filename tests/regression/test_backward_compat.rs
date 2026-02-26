@@ -25,8 +25,9 @@ fn test_backward_compatibility_default_camel_case() {
     .unwrap();
 
     let mut analyzer = CommandAnalyzer::new();
+    let path = Vec::from([String::from(temp_dir.path().to_str().unwrap())]);
     let commands = analyzer
-        .analyze_project(temp_dir.path().to_str().unwrap())
+        .analyze_project(&path)
         .unwrap();
 
     let output_dir = TempDir::new().unwrap();

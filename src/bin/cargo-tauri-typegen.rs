@@ -133,7 +133,7 @@ fn run_generate(
 
     // CLI arguments override config file settings only when explicitly provided
     if let Some(path) = project_path {
-        config.project_path = path.to_string_lossy().to_string();
+        config.project_path = Vec::from([path.to_string_lossy().to_string()]);
     }
     if let Some(path) = output_path {
         config.output_path = path.to_string_lossy().to_string();
@@ -331,7 +331,7 @@ fn run_init(
 
     // Create configuration
     let config = GenerateConfig {
-        project_path: project_path.to_string_lossy().to_string(),
+        project_path: Vec::from([project_path.to_string_lossy().to_string()]),
         output_path: generated_path.to_string_lossy().to_string(),
         validation_library,
         verbose: Some(verbose),
@@ -367,7 +367,7 @@ fn run_init(
 
     // Print configuration summary
     logger.info("📋 Configuration summary:");
-    logger.info(&format!("  • Project path: {}", config.project_path));
+    logger.info(&format!("  • Project path: {}", config.project_path[0]));
     logger.info(&format!(
         "  • Generated files output path: {}",
         config.output_path

@@ -339,7 +339,7 @@ mod tests {
     #[test]
     fn test_default_config() {
         let config = GenerateConfig::default();
-        assert_eq!(config.project_path, "./src-tauri");
+        assert_eq!(config.project_path, Vec::from(["./src-tauri".to_string()]));
         assert_eq!(config.output_path, "./src/generated");
         assert_eq!(config.validation_library, "none");
         assert!(!config.is_verbose());
@@ -386,7 +386,7 @@ mod tests {
         std::fs::create_dir_all(&project_path).unwrap();
 
         let config = GenerateConfig {
-            project_path: [project_path.to_string_lossy().to_string()],
+            project_path: Vec::from([project_path.to_string_lossy().to_string()]),
             output_path: "./test".to_string(),
             verbose: Some(true),
             ..Default::default()
@@ -433,7 +433,7 @@ mod tests {
         .unwrap();
 
         let config = GenerateConfig {
-            project_path: [project_path.to_string_lossy().to_string()],
+            project_path: Vec::from([project_path.to_string_lossy().to_string()]),
             output_path: "./test".to_string(),
             validation_library: "zod".to_string(),
             verbose: Some(true),
@@ -490,7 +490,7 @@ mod tests {
         .unwrap();
 
         let config = GenerateConfig {
-            project_path: [project_path.to_string_lossy().to_string()],
+            project_path: Vec::from([project_path.to_string_lossy().to_string()]),
             output_path: "./test".to_string(),
             validation_library: "none".to_string(),
             ..Default::default()

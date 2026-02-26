@@ -493,7 +493,7 @@ mod tests {
             type_mappings.insert("CustomDate".to_string(), "string".to_string());
 
             GenerateConfig {
-                project_path: ".".to_string(),
+                project_path: Vec::from([".".to_string()]),
                 output_path: "./output".to_string(),
                 validation_library: "none".to_string(),
                 visualize_deps: Some(false),
